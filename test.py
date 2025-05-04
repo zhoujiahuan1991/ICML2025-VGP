@@ -26,7 +26,6 @@ from data_utils import loader_vig as data_loader
 from utils.logger import *
 import pyramid_vig_models
 import vig_models
-import vig_graph_prompt
 from tqdm import tqdm
 from utils.misc import summary_parameters, peft_detect
 from data_utils import create_loader, create_dataset
