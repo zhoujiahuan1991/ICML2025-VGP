@@ -62,5 +62,3 @@ t-SNE.py
 
 *.txt
 *visualize*
-
-GreedyViG-backbones
