@@ -54,7 +54,7 @@ segmentation/__pycache__
 
 datasets/__pycache__
 
-*result*
+result*
 *.pdf
 *.npy
 
