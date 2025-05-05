@@ -1,5 +1,7 @@
 # 2022.10.31-Changed for building ViG model
-#            Huawei Technologies Co., Ltd. <foss@huawei.com>
+# Huawei Technologies Co., Ltd. <foss@huawei.com>
+# 2024.11.01-Changed for building Vision Graph Prompt
+# Peking University, <zxAi@zju.edu.cn>
 import math
 import torch
 import torch.nn as nn
@@ -140,21 +142,11 @@ class Grapher(nn.Module):
             self.relative_pos = nn.Parameter(-relative_pos_tensor.squeeze(1), requires_grad=False)
         
         self.rank_dim = rank_dim
-        # self.node_prompts = nn.Parameter(torch.zeros([in_channels, int(n**0.5)]))
-        #---------------
         self.node_prompts = nn.Parameter(torch.zeros([rank_dim, int(n**0.5)]))
         nn.init.kaiming_normal_(self.node_prompts)
-        # self.low_rank_edge_prompts = nn.Parameter(torch.zeros([rank_dim, prompt_length, kernel_size]))
-        # nn.init.kaiming_normal_(self.low_rank_edge_prompts)
-        # self.edge_prompter = nn.Sequential(nn.Conv2d(rank_dim, in_channels, kernel_size=1))
-        # self.edge_prompter = nn.Sequential(nn.Conv2d(rank_dim, in_channels, kernel_size=1), nn.GELU())
         self.graph_prompt = nn.Parameter(torch.zeros([rank_dim, in_channels]))
         self.node_prompt = nn.Parameter(torch.zeros([rank_dim, in_channels]))
-        # self.graph_prompt2 = nn.Parameter(torch.zeros([rank_dim, in_channels]))
         self.node_prompter = LoRPrompterDown(in_channels, rank_dims=rank_dim, linear_transfrom=False)
-        # self.group_prompt = nn.ModuleList([LoRPrompterUp(embed_dims=in_channels, rank_dims=rank_dim, linear_transfrom=True) for i in range(kernel_size)])
-        #------------
-        # self.edge_prompt = LoRPrompterUp(embed_dims=in_channels, rank_dims=rank_dim, linear_transfrom=True)
         self.edge_prompt = nn.Parameter(torch.zeros([rank_dim, in_channels]))
 
         
@@ -172,19 +164,12 @@ class Grapher(nn.Module):
         x = self.fc1(x)
         B, C, H, W = x.shape
 
-        # low_rank_x = self.node_prompter(x) #[B, r, H, W]
-        # res_node_prompts = low_rank_x.permute(0,2,3,1)@self.graph_prompt
-        # res_node_prompts = res_node_prompts.permute(0,3,1,2)
-        # x = x*0.8+res_node_prompts*0.2
-        # node_prompts = self.node_prompts[None,:,None,:]
         node_prompts = (self.node_prompts.permute(1,0)@self.graph_prompt).permute(1,0)[None,:,None,:]
         node_prompts = node_prompts.expand([B,-1,-1,-1])
         x = torch.cat([x, node_prompts], dim=-2)
         _, _, prop_H, prop_W = x.shape
 
         low_rank_x = self.node_prompter(x) #[B, r, H, W]
-        # res_node_prompts = low_rank_x.permute(0,2,3,1)@self.node_prompt
-        # res_node_prompts = res_node_prompts.permute(0,3,1,2)
         res_node_prompts = torch.einsum('bchw,cd->bdhw', low_rank_x, self.node_prompt)
         x = x*0.8+res_node_prompts*0.2
         if self.relative_pos is not None:
@@ -196,33 +181,14 @@ class Grapher(nn.Module):
         torch.cuda.empty_cache()
         x = self.fc2(x)
 
-        # res_node_prompts2 = low_rank_x.permute(0,2,3,1)@self.graph_prompt2
-        # res_node_prompts2 = res_node_prompts2.permute(0,3,1,2)
-        # x = x*0.8+res_node_prompts2*0.2
-
+    
         # Neighbors low rank features propagate to Centers
         low_rank_neighbors = batched_index_select(low_rank_x.reshape(B, self.rank_dim, -1, 1), neighbor_index)
-        # edge_prompts = []
-        # for i in range(len(self.group_prompt)):
-        #     edge_prompts.append(self.group_prompt[i](low_rank_neighbors[...,i:i+1]))
-        # edge_prompts = torch.concat(edge_prompts, dim=-1)
-        
-        # edge_prompts = self.edge_prompt(low_rank_neighbors)
-        #--------------
-        # edge_prompts = low_rank_neighbors.permute(0,2,3,1)@self.edge_prompt
-        # edge_prompts = edge_prompts.permute(0,3,1,2)
         edge_prompts = torch.einsum('bchw,cd->bdhw', low_rank_neighbors, self.edge_prompt)
         edge_prompts = torch.mean(edge_prompts, dim=-1, keepdim=False)
         edge_prompts = edge_prompts.reshape(B, C, -1, W)
         x = x*0.8 + edge_prompts*0.2
 
-        # x = x + self.adapter(x.transpose(1,3)).transpose(1,3)
-
-        # prompt_neighbor_index = neighbor_index[:,H*W:].unsqueeze(1).expand(-1,C,-1,-1).reshape(B,C,-1,1)
-        # edge_prompts = self.edge_prompter(self.low_rank_edge_prompts).expand(B,-1,-1,-1).reshape(B,C,-1,1)*0.2
-        
-        # x = x.reshape(B, C, -1, 1).contiguous()
-        # x = torch.scatter(x, -2, prompt_neighbor_index, edge_prompts)
         x = x[:,:,:H,:]
         x = self.drop_path(x) + _tmp
         if require_edge:
@@ -317,8 +283,8 @@ class DeepGCN(torch.nn.Module):
                 HW = HW // 4
             for j in range(blocks[i]):
                 self.backbone += [Seq(Grapher(channels[i], num_knn[idx], min(idx // 4 + 1, max_dilation), conv, act, norm, bias, 
-                                              stochastic, epsilon, reduce_ratios[i], n=HW, drop_path=dpr[idx], relative_pos=opt.relative_pos), # , rank_dim=16
-                                      FFN(channels[i], channels[i] * 4, act=act, drop_path=dpr[idx]))] # , rank_dim=16
+                                              stochastic, epsilon, reduce_ratios[i], n=HW, drop_path=dpr[idx], relative_pos=opt.relative_pos), 
+                                      FFN(channels[i], channels[i] * 4, act=act, drop_path=dpr[idx]))] 
                 idx += 1
         self.backbone = Seq(*self.backbone)
 

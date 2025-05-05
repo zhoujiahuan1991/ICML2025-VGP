@@ -72,8 +72,40 @@ pip install -r requirements.txt
 
 
 ## Parameter-efficient Fine-tuning
+For the ten vision adaptation datasets, the same hyperparameters are utilized.
+```bash
+# cifar100 
+python main.py --data_dir ./data --dataset cifar100 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
 
-To do.
+# cifar10
+python main.py --data_dir ./data --dataset cifar10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# dtd47 
+python main.py --data_dir ./data --dataset dtd47 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# food101
+python main.py --data_dir ./data --dataset food101 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# cub200
+python main.py --data_dir ./data --dataset cub200 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# stanford_dogs120
+python main.py --data_dir ./data --dataset stanford_dogs120 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# nabirds1011
+python main.py --data_dir ./data --dataset nabirds1011 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# flowers102
+python main.py --data_dir ./data --dataset flowers102 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# gtsrb43 
+python main.py --data_dir ./data --dataset gtsrb43 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+# svhn10
+python main.py --data_dir ./data --dataset svhn10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+
+```
+
 
 
 ## Citation
@@ -92,5 +124,5 @@ To do.
 ``` -->
 
 ## Acknowledgement
-This repo benefits from [deep_gcns_torch](https://github.com/lightaime/deep_gcns_torch), [VisionGNN](https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch), [VPT](https://github.com/KMnP/vpt), and [InsVP](https://github.com/zhoujiahuan1991/MM2024-InsVP). Thanks for their wonderful works.
+This repo benefits from [DeepGCN](https://github.com/lightaime/deep_gcns_torch), [VisionGNN](https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch), [VPT](https://github.com/KMnP/vpt), and [InsVP](https://github.com/zhoujiahuan1991/MM2024-InsVP). Thanks for their wonderful works.
 

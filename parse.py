@@ -15,7 +15,7 @@ parser.add_argument('--exp_name', type=str, default='check') # -ratiocrop -randc
 parser.add_argument('--peft', action='store_true', default=True)
 parser.add_argument('--model', default='pvig_lor_gp_m_224_gelu', type=str, metavar='MODEL', help='Name of model to train') #lor_gp vig_b_224_gelu vig_prompt_b_224_gelu vig_graph_prompt_b_224_gelu
 parser.add_argument('--pretrain_path', default='pretrained_bases/pvig_m_im21k_90e.pth', type=str) 
-parser.add_argument('--batch_size', type=int, default=100, help='input batch size for training (default: 32)')
+parser.add_argument('--batch_size', type=int, default=32, help='input batch size for training (default: 32)')
 parser.add_argument('--lr', type=float, default=0.0010, metavar='LR', # 0.003 0.002 0.0002 0.00006
                     help='learning rate')
 parser.add_argument('--use_mixup', action='store_true', default=True, help='mixup alpha, mixup enabled if > 0. (default: 0.)')
