@@ -62,3 +62,7 @@ t-SNE.py
 
 *.txt
 *visualize*
+
+data
+
+experiments

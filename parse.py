@@ -11,10 +11,10 @@ parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--data_dir', default="data", help='base directory for datasets') #./data data/vtab-1k
 parser.add_argument('--dataset', type=str, default='flowers102') #dtd47 cub200 nabirds1011 stanford_dogs120 flowers102 food101 cifar100 cifar10 gtsrb43 svhn10
 parser.add_argument('--crop_size', type=int, default=224)
-parser.add_argument('--exp_name', type=str, default='visualize') # -ratiocrop -randcrop
+parser.add_argument('--exp_name', type=str, default='check') # -ratiocrop -randcrop
 parser.add_argument('--peft', action='store_true', default=True)
-parser.add_argument('--model', default='vig_b_224_gelu', type=str, metavar='MODEL', help='Name of model to train') #lor_gp vig_b_224_gelu vig_prompt_b_224_gelu vig_graph_prompt_b_224_gelu
-parser.add_argument('--pretrain_path', default='/data/ckpt/aizixiang/vig_prompt/experiments/flowers102/vig_b_224_gelu/mixup-ratiocrop-lr0.00006/20241227-145731-224/checkpoint-83.pth.tar', type=str) #pretrained_bases/vig_b_82.6.pth pvig_b_83.66.pth.tar pvig_m_im21k_90e.pth
+parser.add_argument('--model', default='pvig_lor_gp_m_224_gelu', type=str, metavar='MODEL', help='Name of model to train') #lor_gp vig_b_224_gelu vig_prompt_b_224_gelu vig_graph_prompt_b_224_gelu
+parser.add_argument('--pretrain_path', default='pretrained_bases/pvig_m_im21k_90e.pth', type=str) 
 parser.add_argument('--batch_size', type=int, default=100, help='input batch size for training (default: 32)')
 parser.add_argument('--lr', type=float, default=0.0010, metavar='LR', # 0.003 0.002 0.0002 0.00006
                     help='learning rate')

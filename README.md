@@ -1,0 +1,96 @@
+# Vision Graph Prompting via Semantic Low-Rank Decomposition
+<div align="center">
+    Zixiang Ai<sup>1</sup>&emsp; Zichen Liu<sup>1</sup>&emsp; Jiahuan Zhou<sup>†</sup><sup>1</sup> <br>
+    <small>
+    <sup>1 Wangxuan Institute of Computer Technology, Peking University&emsp; <br></sup>
+    </small>
+</div>
+
+<p align="center">
+  <a href="https://github.com/zhoujiahuan1991/ICML2025-VGP"><img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fzhoujiahuan1991%2FICML2025-VGP&label=VGP&icon=github&color=%233d8bfd"></a>
+</p>
+
+<div align="center">
+Official implementation of 'Vision Graph Prompting via Semantic Low-Rank Decomposition'.
+
+
+The paper has been accepted by **ICML 2025**.
+</div>
+
+
+
+
+<p align="center"><img src="files/pipeline.png" width="60%"></p>
+Vision GNN (ViG) demonstrates superior performance by representing images as graph structures, providing a more natural way to capture irregular semantic patterns beyond traditional grid or sequence-based representations. To efficiently adapt ViG to downstream tasks, parameter-efficient fine-tuning techniques like visual prompting become increasingly essential. However, existing prompting methods are primarily designed for Transformer-based models, neglecting the rich topological relationships among nodes and edges in graph-based representations, limiting their capacity to model complex semantics. In this paper, we propose Vision Graph Prompting (VGP), a novel framework tailored for vision graph structures. Our core insight reveals that semantically connected components in the graph exhibit low-rank properties. 
+
+Building on this observation, we introduce a semantic low-rank prompting method that decomposes low-rank semantic features and integrates them with prompts on vision graph topologies, capturing both global structural patterns and fine-grained semantic dependencies. 
+Extensive experiments demonstrate our method significantly improves ViG’s transfer performance on diverse downstream tasks, achieving results comparable to full fine-tuning while maintaining parameter efficiency. 
+
+
+<p align="center"><img src="files/observation.png" width="60%"></p>
+ The center patch (red star) is randomly selected from the primary semantic region, with neighboring patches (blue dot) linked via edges. PCA is applied to patches from the same image group (a, b), mapping the first three components to the RGB color channels. Despite variations in shape, texture, and color, the ViG graph effectively connects semantically related object parts. These connected regions share common principal components, demonstrating a low-rank structure. Background regions are filtered out by thresholding the first principal component.
+
+
+## Main Results
+Head-tuning adaptation performance of various methods across ten datasets using the pyramid ViG model pre-trained on ImageNet-21k, with classification accuracy (%) reported. For reference, state-of-the-art visual prompting methods applied to ViT models pre-trained on ImageNet-21k are also included. 
+<p align="center"><img src="files/vision-result.png" width="60%"></p>
+
+
+Adaptation performance on eight chemistry and one biology benchmarks, based on GIN models pre-trained with Edge Prediction.
+<p align="center"><img src="files/graph-result.png" width="60%"></p>
+
+
+
+## Checkpoint Release
+To do.
+<!-- 
+Real-world shape classification on the PB-T50-RS split of ScanObjectNN:
+| Method | Acc.| Logs |
+| :-----: |:-----:| :-----:|
+| Point-M2AE-aug |88.2% | [scan_m2ae.log](https://drive.google.com/file/d/1Dx8ucp_7_2GtSe60wq3jsbtn4xUKHqM8/view?usp=sharing) |
+| Point-MAE-aug | 89.1% | [scan_mae.log](https://drive.google.com/file/d/1WF7mnKwqrluWTOuKHXPUfkBJ8cLUEONh/view?usp=sharing) | -->
+
+
+
+## Environment
+Create a conda environment and install basic dependencies:
+```bash
+git clone git@github.com:zhoujiahuan1991/ICML2025-VGP.git
+cd ICML2025-VGP
+
+# Not necessary
+conda create -n vgp python=3.9
+conda activate vgp
+
+# Install the corresponding versions of Torch and TorchVision; other compatible versions are also acceptable.
+pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+
+pip install -r requirements.txt
+```
+
+## Dataset
+
+
+## Parameter-efficient Fine-tuning
+
+To do.
+
+
+## Citation
+If you find our paper and code useful in your research, please consider giving a star and citation.
+To do.
+<!-- ```bash
+@inproceedings{tang2024point,
+  title={Point-PEFT: Parameter-efficient fine-tuning for 3D pre-trained models},
+  author={Tang, Yiwen and Zhang, Ray and Guo, Zoey and Ma, Xianzheng and Zhao, Bin and Wang, Zhigang and Wang, Dong and Li, Xuelong},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={38},
+  number={6},
+  pages={5171--5179},
+  year={2024}
+}
+``` -->
+
+## Acknowledgement
+This repo benefits from [Point-BERT](https://github.com/lulutang0608/Point-BERT), [Point-MAE](https://github.com/Pang-Yatian/Point-MAE), [ReCon](https://github.com/qizekun/ReCon), [PointGPT](https://github.com/CGuangyan-BIT/PointGPT), [PointFEMAE](https://github.com/zyh16143998882/AAAI24-PointFEMAE), [IDPT](https://github.com/zyh16143998882/ICCV23-IDPT), [DAPT](https://github.com/LMD0311/DAPT), and [Point-PEFT](https://github.com/Ivan-Tang-3D/Point-PEFT). Thanks for their wonderful works.
+
