@@ -92,5 +92,5 @@ To do.
 ``` -->
 
 ## Acknowledgement
-This repo benefits from [Point-BERT](https://github.com/lulutang0608/Point-BERT), [Point-MAE](https://github.com/Pang-Yatian/Point-MAE), [ReCon](https://github.com/qizekun/ReCon), [PointGPT](https://github.com/CGuangyan-BIT/PointGPT), [PointFEMAE](https://github.com/zyh16143998882/AAAI24-PointFEMAE), [IDPT](https://github.com/zyh16143998882/ICCV23-IDPT), [DAPT](https://github.com/LMD0311/DAPT), and [Point-PEFT](https://github.com/Ivan-Tang-3D/Point-PEFT). Thanks for their wonderful works.
+This repo benefits from [deep_gcns_torch](https://github.com/lightaime/deep_gcns_torch), [VisionGNN](https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch), [VPT](https://github.com/KMnP/vpt), and [InsVP](https://github.com/zhoujiahuan1991/MM2024-InsVP). Thanks for their wonderful works.
 
