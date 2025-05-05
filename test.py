@@ -1,7 +1,7 @@
 import os
 os.environ['OMP_NUM_THREADS']='2'
 os.environ['MKL_NUM_THREADS']='2'
-os.environ['CUDA_VISIBLE_DEVICES'] = '7'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 os.environ["CUDA_LAUNCH_BLOCKING"] = '1'
 
 import warnings
@@ -66,24 +66,17 @@ def test():
         print_log('Training with a single process on %d GPUs.'%args.num_gpu)
 
     torch.manual_seed(args.seed + args.rank)
+    
+    relative_pos = False
     model = create_model(
         args.model,
         num_classes=args.num_classes,
         drop_rate=args.drop_rate,
-        drop_path_rate=args.drop_path
+        drop_path_rate=args.drop_path,
+        relative_pos = relative_pos
         )
     
     data_config = resolve_data_config(vars(args), model=model, verbose=False)
-    # output_dir = ''
-    # if args.local_rank == 0:
-    #     output_base = './experiments'
-    #     exp_tag = '-'.join([datetime.now().strftime(f"%Y%m%d-%H%M%S"), str(data_config['input_size'][-1])])
-    #     output_dir = get_outdir(output_base, args.dataset.replace('-','/'), args.model, args.exp_name, exp_tag)
-    #     with open(os.path.join(output_dir, 'args.yaml'), 'w') as f:
-    #         f.write(args_text)
-    #     log_file = os.path.join(output_dir, f'history.log')
-    #     logger = get_root_logger(log_file=log_file, name=args.exp_name)
-
     
     dataset_eval = create_dataset(
         args.dataset, 
@@ -93,7 +86,6 @@ def test():
         batch_size=args.batch_size
         )
     
-
     eval_loader = create_loader(
         dataset_eval,
         input_size=data_config['input_size'][-1],

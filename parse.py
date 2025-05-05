@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
 # Dataset / Model parameters
 parser.add_argument('--data_dir', default="data", help='base directory for datasets') #./data data/vtab-1k
-parser.add_argument('--dataset', type=str, default='flowers102') #dtd47 cub200 nabirds1011 stanford_dogs120 flowers102 food101 cifar100 cifar10 gtsrb43 svhn10
+parser.add_argument('--dataset', type=str, default='cifar100') #dtd47 cub200 nabirds1011 stanford_dogs120 flowers102 food101 cifar100 cifar10 gtsrb43 svhn10
 parser.add_argument('--crop_size', type=int, default=224)
 parser.add_argument('--exp_name', type=str, default='check') # -ratiocrop -randcrop
 parser.add_argument('--peft', action='store_true', default=True)
@@ -23,7 +23,7 @@ parser.add_argument('--mixup', type=float, default=0.8, help='mixup alpha, mixup
 parser.add_argument('--cutmix', type=float, default=0.8, help='cutmix alpha, cutmix enabled if > 0. (default: 0.)') #1.0
 parser.add_argument('--num_classes', type=int, default=102, metavar='N', help='number of label classes (default: 1000)')
 
-parser.add_argument('--initial-checkpoint', type=str, metavar='PATH',
+parser.add_argument('--initial-checkpoint', type=str, metavar='PATH', default="experiments/cifar100/pvig_lor_gp_m_224_gelu/mixup-lr0.0010-3matrix/20250124-120128-224-89.67/checkpoint-98.pth.tar",
                     help='Initialize model from this checkpoint (default: none)')
 parser.add_argument('--pretrained', action='store_true', default=True,
                     help='Start with pretrained version of specified network (if avail)')

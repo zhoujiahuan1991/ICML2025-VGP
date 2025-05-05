@@ -70,9 +70,7 @@ def main():
         print_log('Training with a single process on %d GPUs.'%args.num_gpu)
 
     torch.manual_seed(args.seed + args.rank)
-    # if 'vtab' in args.dataset:
-    #     relative_pos = True
-    # else:
+    
     relative_pos = False
     model = create_model(
         args.model,
