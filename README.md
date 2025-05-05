@@ -42,14 +42,25 @@ Adaptation performance on eight chemistry and one biology benchmarks, based on G
 
 
 ## Checkpoint Release
-To do.
-<!-- 
-Real-world shape classification on the PB-T50-RS split of ScanObjectNN:
-| Method | Acc.| Logs |
-| :-----: |:-----:| :-----:|
-| Point-M2AE-aug |88.2% | [scan_m2ae.log](https://drive.google.com/file/d/1Dx8ucp_7_2GtSe60wq3jsbtn4xUKHqM8/view?usp=sharing) |
-| Point-MAE-aug | 89.1% | [scan_mae.log](https://drive.google.com/file/d/1WF7mnKwqrluWTOuKHXPUfkBJ8cLUEONh/view?usp=sharing) | -->
+The pre-trained backbones are provided below. In our main result table, the pyramid Vision GNN model with medium size pre-trained on ImageNet-21k is adopted. 
 
+- ViG
+
+| Model  | Pre-train   | Params (M) | FLOPs (B) | Top-1 | Github Release                                               |
+| ------ | ----------- | ---------- | --------- | ----- | ------------------------------------------------------------ |
+| ViG-Ti | ImageNet-1k | 7.1        | 1.3       | 73.9  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/vig) |
+| ViG-S  | ImageNet-1k | 22.7       | 4.5       | 80.4  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/vig) |
+| ViG-B  | ImageNet-1k | 86.8       | 17.7      | 82.3  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/vig) |
+
+- Pyramid ViG
+
+| Model             |    Pre-train     | Params (M) | FLOPs (B) | Top-1 | Github Release                                               |
+| ----------------- | :--------------: | ---------- | --------- | ----- | ------------------------------------------------------------ |
+| Pyramid ViG-Ti    |   ImageNet-1k    | 10.7       | 1.7       | 78.5  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/pyramid-vig) |
+| Pyramid ViG-S     |   ImageNet-1k    | 27.3       | 4.6       | 82.1  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/pyramid-vig) |
+| Pyramid ViG-M     |   ImageNet-1k    | 51.7       | 8.9       | 83.1  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/pyramid-vig) |
+| Pyramid ViG-B     |   ImageNet-1k    | 82.6       | 16.8      | 83.7  | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/tag/pyramid-vig) |
+| **Pyramid ViG-M** | **ImageNet-21k** | 51.7       | 8.9       | -     | [Github Release](https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/pyramid-vig/pvig_m_im21k_90e.pth) |
 
 
 ## Environment
@@ -69,40 +80,62 @@ pip install -r requirements.txt
 ```
 
 ## Dataset
+We conduct vision adaptation tasks on ten different datasets, following [DAM-VP](https://github.com/shikiw/DAM-VP).
+The CUB, Birds, Dogs, and Flowers can be downloaded in VPT repo, while the other datasets can be accessed through torchvision.
 
+To prepare the datasets of Visual Task Adaptation Benchmark (VTAB) benchmark, you can install the tensorflow package as in VPT repo and run the command below:
+```bash
+python data_utils/vtab_prep.py
+```
+The overall directory structure should be:
+
+```
+data
+├── cifar-100-python
+├── cifar-10-batches-py
+├── CUB_200_2011
+├── dtd
+├── flowers102
+├── food101
+├── gtsrb
+├── nabirds
+├── StanfordCars
+├── stanford_dogs
+└── SVHN
+```
 
 ## Parameter-efficient Fine-tuning
 For the ten vision adaptation datasets, the same hyperparameters are utilized.
 ```bash
 # cifar100 
-python main.py --data_dir ./data --dataset cifar100 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset cifar100 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # cifar10
-python main.py --data_dir ./data --dataset cifar10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset cifar10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # dtd47 
-python main.py --data_dir ./data --dataset dtd47 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset dtd47 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # food101
-python main.py --data_dir ./data --dataset food101 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset food101 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # cub200
-python main.py --data_dir ./data --dataset cub200 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset cub200 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # stanford_dogs120
-python main.py --data_dir ./data --dataset stanford_dogs120 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset stanford_dogs120 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # nabirds1011
-python main.py --data_dir ./data --dataset nabirds1011 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset nabirds1011 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # flowers102
-python main.py --data_dir ./data --dataset flowers102 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset flowers102 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # gtsrb43 
-python main.py --data_dir ./data --dataset gtsrb43 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset gtsrb43 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 # svhn10
-python main.py --data_dir ./data --dataset svhn10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained 
+python main.py --data_dir ./data --dataset svhn10 --exp_name check --model pvig_lor_gp_m_224_gelu --pretrain_path pretrained_bases/pvig_m_im21k_90e.pth --lr 0.0010 --pretrained --peft
 
 ```
 
