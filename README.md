@@ -7,6 +7,7 @@
 </div>
 
 <p align="center">
+  <a href='https://arxiv.org/abs/2505.04121'><img src='https://img.shields.io/badge/Arxiv-2505.04121-A42C25.svg?logo=arXiv'></a>
   <a href="https://github.com/zhoujiahuan1991/ICML2025-VGP"><img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Fzhoujiahuan1991%2FICML2025-VGP&label=VGP&icon=github&color=%233d8bfd"></a>
 </p>
 
