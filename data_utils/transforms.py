@@ -116,24 +116,4 @@ def get_transforms(split, size, args):
     else:
         raise NotImplementedError("Unrecognized dataset split!")
         
-    # applying different tranforms for training and test
-    # if split == "train":
-    #     transform = tv.transforms.Compose(
-    #         [
-    #             tv.transforms.Resize(224),
-    #             tv.transforms.RandomCrop(224),
-    #             tv.transforms.RandomHorizontalFlip(0.5),
-    #             tv.transforms.ToTensor(),
-    #             tv.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    #         ]
-    #     )
-    # else:
-    #     transform = tv.transforms.Compose(
-    #         [
-    #             tv.transforms.Resize(224),
-    #             tv.transforms.CenterCrop(224),
-    #             tv.transforms.ToTensor(),
-    #             tv.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    #         ]
-    #     )
     return transform

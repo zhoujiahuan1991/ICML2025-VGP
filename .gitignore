@@ -60,7 +60,7 @@ result*
 
 t-SNE.py
 
-*.txt
+
 *visualize*
 
 data
