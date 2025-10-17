@@ -147,8 +147,8 @@ If you find our paper and code useful in your research, please consider giving a
 ```bash
 @inproceedings{ai2025vgp,
   title={Vision Graph Prompting via Semantic Low-Rank Decomposition},
-  author={Zixiang Ai, Zichen Liu, Jiahuan Zhou},
-  booktitle={International Conference on Machine Learning (ICML) },
+  author={Ai, Zixiang and Liu, Zichen and Zhou, Jiahuan},
+  booktitle={International Conference on Machine Learning},
   year={2025}
 }
 ```
