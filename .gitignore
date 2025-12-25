@@ -69,3 +69,6 @@ experiments
 
 *.sh
 *.out
+*/pretrained_models
+bio/bio_dataset.zip
+chem/chem_dataset.zip
