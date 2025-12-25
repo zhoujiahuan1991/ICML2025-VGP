@@ -140,6 +140,10 @@ python main.py --data_dir ./data --dataset svhn10 --exp_name check --model pvig_
 
 ```
 
+## Bio and Chem Dataset
+We furtherly conduct adaptation tasks across biology and chemistry graph datasets, following [GPF](https://github.com/LuckyTiger123/GPF).
+
+To prepare the datasets in the biology and chemistry domain, just unzip the bio/bio_dataset.zip and chem/chem_dataset.zip files.
 
 
 ## Citation

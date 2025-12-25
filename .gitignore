@@ -66,3 +66,6 @@ t-SNE.py
 data
 
 experiments
+
+*.sh
+*.out
