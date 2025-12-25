@@ -143,17 +143,22 @@ python main.py --data_dir ./data --dataset svhn10 --exp_name check --model pvig_
 ## Bio and Chem Dataset
 We furtherly conduct adaptation tasks across biology and chemistry graph datasets, following [GPF](https://github.com/LuckyTiger123/GPF).
 
-To prepare the datasets in the biology and chemistry domain, just unzip the bio/bio_dataset.zip and chem/chem_dataset.zip files.
+To prepare the datasets in the biology and chemistry domains, just unzip the [bio/bio_dataset.zip](https://snap.stanford.edu/gnn-pretrain/data/bio_dataset.zip) and [chem/chem_dataset.zip](https://snap.stanford.edu/gnn-pretrain/data/chem_dataset.zip) files. And the pre-trained graph model weights can be downloaded at this [url](https://github.com/zhoujiahuan1991/ICML2025-VGP/releases/tag/pre-trained-weights).
 
 
 ## Citation
 If you find our paper and code useful in your research, please consider giving a star and citation.
 ```bash
 @inproceedings{ai2025vgp,
-  title={Vision Graph Prompting via Semantic Low-Rank Decomposition},
-  author={Ai, Zixiang and Liu, Zichen and Zhou, Jiahuan},
-  booktitle={International Conference on Machine Learning},
-  year={2025}
+  title = 	 {Vision Graph Prompting via Semantic Low-Rank Decomposition},
+  author =   {Ai, Zixiang and Liu, Zichen and Zhou, Jiahuan},
+  booktitle = {Proceedings of the 42nd International Conference on Machine Learning},
+  pages = 	 {809--821},
+  year = 	 {2025},
+  volume = 	 {267},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {13--19 Jul},
+  publisher = {PMLR}
 }
 ```
 
