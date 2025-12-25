@@ -148,18 +148,14 @@ To prepare the datasets in the biology and chemistry domain, just unzip the bio/
 
 ## Citation
 If you find our paper and code useful in your research, please consider giving a star and citation.
-To do.
-<!-- ```bash
-@inproceedings{tang2024point,
-  title={Point-PEFT: Parameter-efficient fine-tuning for 3D pre-trained models},
-  author={Tang, Yiwen and Zhang, Ray and Guo, Zoey and Ma, Xianzheng and Zhao, Bin and Wang, Zhigang and Wang, Dong and Li, Xuelong},
-  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
-  volume={38},
-  number={6},
-  pages={5171--5179},
-  year={2024}
+```bash
+@inproceedings{ai2025vgp,
+  title={Vision Graph Prompting via Semantic Low-Rank Decomposition},
+  author={Ai, Zixiang and Liu, Zichen and Zhou, Jiahuan},
+  booktitle={International Conference on Machine Learning},
+  year={2025}
 }
-``` -->
+```
 
 ## Acknowledgement
 This repo benefits from [DeepGCN](https://github.com/lightaime/deep_gcns_torch), [VisionGNN](https://github.com/huawei-noah/Efficient-AI-Backbones/tree/master/vig_pytorch), [VPT](https://github.com/KMnP/vpt), and [InsVP](https://github.com/zhoujiahuan1991/MM2024-InsVP). Thanks for their wonderful works.
